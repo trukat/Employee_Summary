@@ -12,30 +12,6 @@ const render = require("./lib/htmlRenderer");
 
 const teamMembers = [];
 
-// function inputEmployee() {
-//   inquirer
-//     .prompt([
-//       {
-//         type: "list",
-//         name: "role",
-//         message: "What type of team member are you adding?",
-//         choices: ["Manager", "Engineer", "Intern"],
-//       },
-//     ])
-//     .then((answer) => {
-//       console.log(answer);
-//       if (answer.role === "Manager") {
-//         createManager();
-//       } else if (answer.role === "Engineer") {
-//         createEngineer();
-//       } else {
-//         createIntern();
-//       }
-//     });
-// }
-
-// inputEmployee();
-
 function createManager(arr) {
   const managerInfo = [
     {
@@ -161,7 +137,6 @@ function askQuestions() {
         }
   });
 }
-
 
 askQuestions();
 
