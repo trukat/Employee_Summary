@@ -39,8 +39,5 @@
 
   ## Live Demo
   [Instructional Video](https://drive.google.com/file/d/1Yn9pCwZoI2wbR2Lwcw5YQpCS4lt0JJ-i/view)
-<<<<<<< HEAD
     
-=======
     
->>>>>>> eb653623ec1b88719d6c30bbd12e69f713568c46
