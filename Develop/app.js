@@ -12,97 +12,66 @@ const render = require("./lib/htmlRenderer");
 
 const teamMembers = [];
 
-function inputEmployee() {
-  inquirer
-    .prompt([
-      {
-        type: "list",
-        name: "role",
-        message: "What type of team member are you adding?",
-        choices: ["Manager", "Engineer", "Intern"],
-      },
-    ])
-    .then((answer) => {
-      console.log(answer);
-      if (answer.role === "Manager") {
-        createManager();
-      } else if (answer.role === "Engineer") {
-        createEngineer();
-      } else if (answer.role === "Intern") {
-        createIntern();
-      }
-    });
-}
+// function inputEmployee() {
+//   inquirer
+//     .prompt([
+//       {
+//         type: "list",
+//         name: "role",
+//         message: "What type of team member are you adding?",
+//         choices: ["Manager", "Engineer", "Intern"],
+//       },
+//     ])
+//     .then((answer) => {
+//       console.log(answer);
+//       if (answer.role === "Manager") {
+//         createManager();
+//       } else if (answer.role === "Engineer") {
+//         createEngineer();
+//       } else {
+//         createIntern();
+//       }
+//     });
+// }
 
-inputEmployee();
+// inputEmployee();
 
-function createManager() {
+function createManager(arr) {
   const managerInfo = [
     {
       type: "input",
-      name: "managerName",
-      message: "What is the manager's name?",
-    },
-    {
-      type: "input",
-      name: "managerEmail",
-      message: "What is the manager's email address?",
-    },
-    {
-      type: "input",
-      name: "managerID",
-      message: "What is the manager's ID?",
-    },
-
-    {
-      type: "input",
       name: "managerOfficeNumber",
-      message: "What is the manager's office number?",
+      message: "What is your office number?",
     },
   ];
 
   inquirer.prompt(managerInfo).then((answer) => {
     const manager = new Manager(
-      answer.managerName,
-      answer.managerID,
-      answer.managerEmail,
+      arr[0],
+      arr[1],
+      arr[2],
       answer.managerOfficeNumber
     );
+    console.log(manager);
     teamMembers.push(manager);
     createTeam();
   });
 }
 
-function createEngineer() {
+function createEngineer(arr) {
   const engineerInfo = [
     {
       type: "input",
-      name: "engineerName",
-      message: "What is the engineer's name?",
-    },
-    {
-      type: "input",
-      name: "engineerEmail",
-      message: "What is the engineer's email address?",
-    },
-    {
-      type: "input",
-      name: "engineerID",
-      message: "What is the engineer's ID?",
-    },
-
-    {
-      type: "input",
       name: "github",
-      message: "What is the engineer's GitHub username?",
+      message: "What is your GitHub username?",
     },
   ];
 
   inquirer.prompt(engineerInfo).then((answer) => {
     const engineer = new Engineer(
-      answer.engineerName,
-      answer.engineerID,
-      answer.engineerEmail,
+        arr[0],
+        arr[1],
+        arr[2],
       answer.github
     );
     teamMembers.push(engineer);
@@ -110,36 +79,20 @@ function createEngineer() {
   });
 }
 
-function createIntern() {
+function createIntern(arr) {
   const internInfo = [
     {
       type: "input",
-      name: "internName",
-      message: "What is the intern's name?",
-    },
-    {
-      type: "input",
-      name: "internEmail",
-      message: "What is the intern's email address?",
-    },
-    {
-      type: "input",
-      name: "internID",
-      message: "What is the intern's ID?",
-    },
-
-    {
-      type: "input",
       name: "school",
-      message: "What is the intern's school?",
+      message: "What is your school name?",
     },
   ];
 
   inquirer.prompt(internInfo).then((answer) => {
     const intern = new Intern(
-      answer.internName,
-      answer.internID,
-      answer.internEmail,
+        arr[0],
+        arr[1],
+        arr[2],
       answer.school
     );
     teamMembers.push(intern);
@@ -157,7 +110,7 @@ function createTeam() {
     },
   ]).then((answer) => {
     if (answer.addTeamMember === true) {
-      inputEmployee();
+      askQuestions();
     } else {
       outputTeam();
     }
@@ -166,13 +119,51 @@ function createTeam() {
 
 function outputTeam() {
   const HTML = render(teamMembers);
-  fs.writeFile(outputPath, HTML, error => {
-    if (error) {
-      console.log(error);
-      return;
-    }
+  fs.writeFile(outputPath, HTML, (err) => {
+    if (err) throw err;
   });
 }
+
+const basicQuestions = [
+    {
+        type: "input",
+        name: "employeeName",
+        message: "What is your name?",
+      },
+      {
+        type: "input",
+        name: "employeeID",
+        message: "What is your ID number?",
+      },
+      {
+        type: "input",
+        name: "employeeEmail",
+        message: "What is your email address?",
+      },
+      {
+        type: "list",
+        name: "role",
+        message: "What is your role?",
+        choices: ["Manager", "Engineer", "Intern"],
+      },
+]
+
+function askQuestions() {
+    inquirer.prompt(basicQuestions).then((answer) => {
+        let basicAnswers = [];
+        basicAnswers.push(answer.employeeName, answer.employeeID, answer.employeeEmail, answer.role);
+    if (answer.role === "Manager") {
+        createManager(basicAnswers);
+    } else if (answer.role === "Engineer") {
+            createEngineer(basicAnswers);
+        } else {
+            createIntern(basicAnswers);
+        }
+  });
+}
+
+
+askQuestions();
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
