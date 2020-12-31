@@ -21,7 +21,10 @@
   ```
 
   ## Usage
-   The application should be ran using 'node app.js'The dependencies are, [jest](https://jestjs.io/) for running the provided tests, and [inquirer](https://www.npmjs.com/package/inquirer) for collecting input from the user.
+   The application should be ran using 'node app.js'. The dependencies are, [jest](https://jestjs.io/) for running the provided tests, and [inquirer](https://www.npmjs.com/package/inquirer) for collecting input from the user.
+
+ ## Image
+ ![App Screenshot](https://user-images.githubusercontent.com/70115734/103396664-b9389900-4af1-11eb-983d-baae9619f8e2.png)
    
   ## Contributors
   Kathy Trujillo
